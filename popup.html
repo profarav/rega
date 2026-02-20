@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rega Focus</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup-shell">
+      <section id="dashboard-view" class="view hidden" data-active="false">
+        <h1 class="title">Tap to Focus</h1>
+
+        <button id="focus-orb" class="focus-orb" type="button" aria-label="Toggle focus blocking">
+          <span class="orb-highlight"></span>
+          <span class="orb-band"></span>
+        </button>
+
+        <button id="details-toggle" class="details-toggle" type="button" aria-expanded="false">
+          My Focus <span class="chevron">›</span>
+        </button>
+
+        <div id="menu-panel" class="menu-panel hidden" aria-hidden="true">
+          <button id="logout-btn" type="button" class="menu-btn">Logout</button>
+        </div>
+      </section>
+
+      <section id="login-view" class="view hidden">
+        <h1 class="title">Tap to Focus</h1>
+
+        <form id="login-form" class="login-card">
+          <p class="login-label">Login to Rega</p>
+
+          <label class="field" for="email">Email</label>
+          <input id="email" type="email" autocomplete="username" required />
+
+          <label class="field" for="password">Password</label>
+          <input id="password" type="password" autocomplete="current-password" required />
+
+          <button type="submit" class="login-btn">Enter Focus</button>
+        </form>
+      </section>
+
+      <p id="error" class="error hidden"></p>
+    </main>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
