@@ -320,20 +320,37 @@ body {
   background: rgba(255, 255, 255, 0.25);
 }
 
-.session-body {
-  margin-top: auto;
+/* timer takes up all flex space between topbar and button */
+.session-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.session-timer-wrap {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  align-items: center;
+  gap: 10px;
+}
+
+.session-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
 }
 
 .session-timer {
-  font-size: 64px;
+  font-size: 68px;
   font-weight: 700;
   color: #ffffff;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   line-height: 1;
   font-variant-numeric: tabular-nums;
+  text-align: center;
 }
 
 .emergency-exit-btn {
