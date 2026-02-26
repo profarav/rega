@@ -23,7 +23,8 @@ const STORAGE_KEYS = {
   manualEnabled: "rega_manual_enabled",
   focusSessionActive: "rega_focus_session_active",
   blockingActive: "rega_blocking_active",
-  lastSyncAt: "rega_last_sync_at"
+  lastSyncAt: "rega_last_sync_at",
+  sessionStartTime: "rega_session_start_time"
 };
 
 const POLL_ALARM = "rega-poll-sync";
@@ -222,7 +223,8 @@ async function getUiState() {
       STORAGE_KEYS.manualEnabled,
       STORAGE_KEYS.focusSessionActive,
       STORAGE_KEYS.blockingActive,
-      STORAGE_KEYS.lastSyncAt
+      STORAGE_KEYS.lastSyncAt,
+      STORAGE_KEYS.sessionStartTime
     ])
   ]);
 
@@ -235,7 +237,8 @@ async function getUiState() {
     focusSessionActive: Boolean(stored[STORAGE_KEYS.focusSessionActive]),
     blockingActive: Boolean(stored[STORAGE_KEYS.blockingActive]),
     mockFocusSession: Boolean(mockFocus),
-    lastSyncAt: stored[STORAGE_KEYS.lastSyncAt] || null
+    lastSyncAt: stored[STORAGE_KEYS.lastSyncAt] || null,
+    sessionStartTime: stored[STORAGE_KEYS.sessionStartTime] || null
   };
 }
 
@@ -297,9 +300,17 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     }
 
     if (action === ACTIONS.setManualEnabled) {
-      await chrome.storage.local.set({
-        [STORAGE_KEYS.manualEnabled]: Boolean(message.enabled)
-      });
+      const enabling = Boolean(message.enabled);
+      const update = { [STORAGE_KEYS.manualEnabled]: enabling };
+      if (enabling) {
+        const existing = await chrome.storage.local.get([STORAGE_KEYS.sessionStartTime]);
+        if (!existing[STORAGE_KEYS.sessionStartTime]) {
+          update[STORAGE_KEYS.sessionStartTime] = Date.now();
+        }
+      } else {
+        update[STORAGE_KEYS.sessionStartTime] = null;
+      }
+      await chrome.storage.local.set(update);
       await applyBlockingState();
 
       if (typeof message.tabId === "number") {

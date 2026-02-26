@@ -273,6 +273,106 @@ body {
   z-index: 4;
 }
 
+/* ── Session View ──────────────────────────────────────────── */
+
+#session-view {
+  position: absolute;
+  inset: 8px;
+  border-radius: 18px;
+  background: #0e0e0e;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 26px 22px 26px;
+  overflow: hidden;
+}
+
+.session-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.session-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.68);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.session-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.session-dots span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.session-timer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  font-size: 68px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.emergency-exit-btn {
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  padding: 18px 22px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background: #e04f3c;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: inherit;
+  letter-spacing: 0.01em;
+  transition: filter 180ms ease;
+  text-align: left;
+}
+
+.emergency-exit-btn:hover {
+  filter: brightness(1.1);
+}
+
+.emergency-exit-btn:active {
+  filter: brightness(0.88);
+}
+
+.emergency-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.emergency-text {
+  line-height: 1.35;
+}
+
+/* ── Pulse animation ───────────────────────────────────────── */
+
 @keyframes pulseGlow {
   0% {
     box-shadow: 0 0 48px rgba(204, 170, 248, 0.66), 0 0 110px rgba(193, 146, 231, 0.3),
