@@ -8,6 +8,9 @@ const ACTIONS = {
 const els = {
   loginView: document.querySelector("#login-view"),
   dashboardView: document.querySelector("#dashboard-view"),
+  sessionView: document.querySelector("#session-view"),
+  sessionTimer: document.querySelector("#session-timer"),
+  emergencyExitBtn: document.querySelector("#emergency-exit-btn"),
   loginForm: document.querySelector("#login-form"),
   email: document.querySelector("#email"),
   password: document.querySelector("#password"),
@@ -20,6 +23,35 @@ const els = {
 
 let currentState = null;
 let menuOpen = false;
+let timerInterval = null;
+
+function formatDuration(ms) {
+  const totalSeconds = Math.floor(ms / 1000);
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  if (h > 0) {
+    return `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  }
+  return `${m}:${String(s).padStart(2, "0")}`;
+}
+
+function startTimer(startTime) {
+  if (timerInterval) clearInterval(timerInterval);
+  const tick = () => {
+    els.sessionTimer.textContent = formatDuration(Date.now() - startTime);
+  };
+  tick();
+  timerInterval = setInterval(tick, 1000);
+}
+
+function stopTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+  els.sessionTimer.textContent = "0:00";
+}
 
 function setError(message = "") {
   els.error.textContent = message;
@@ -51,18 +83,28 @@ async function getTargetTabId() {
 function renderState(state) {
   currentState = state;
   const isLoggedIn = Boolean(state?.isLoggedIn);
+  const isActive = isLoggedIn && Boolean(state.blockingActive || state.manualEnabled);
 
   els.loginView.classList.toggle("hidden", isLoggedIn);
-  els.dashboardView.classList.toggle("hidden", !isLoggedIn);
+  els.dashboardView.classList.toggle("hidden", !isLoggedIn || isActive);
+  els.sessionView.classList.toggle("hidden", !isActive);
 
   if (!isLoggedIn) {
     setMenuOpen(false);
+    stopTimer();
     return;
   }
 
-  const isActive = Boolean(state.blockingActive || state.manualEnabled);
   els.dashboardView.dataset.active = isActive ? "true" : "false";
   els.focusOrb.setAttribute("aria-pressed", String(Boolean(state.manualEnabled)));
+
+  if (isActive) {
+    if (!timerInterval) {
+      startTimer(state.sessionStartTime || Date.now());
+    }
+  } else {
+    stopTimer();
+  }
 }
 
 async function refreshState() {
@@ -97,6 +139,17 @@ els.focusOrb.addEventListener("click", async () => {
       enabled: !Boolean(currentState.manualEnabled),
       tabId
     });
+    renderState(state);
+  } catch (error) {
+    setError(error.message);
+  }
+});
+
+els.emergencyExitBtn.addEventListener("click", async () => {
+  setError("");
+  const tabId = await getTargetTabId();
+  try {
+    const state = await sendAction(ACTIONS.setManualEnabled, { enabled: false, tabId });
     renderState(state);
   } catch (error) {
     setError(error.message);
