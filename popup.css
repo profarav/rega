@@ -276,7 +276,11 @@ body {
 
 #session-view {
   position: absolute;
-  inset: 7px;
+  top: 7px;
+  left: 7px;
+  right: 7px;
+  height: 466px; /* 480px popup - 7px top - 7px bottom */
+  box-sizing: border-box;
   border-radius: 16px;
   background: #0e0e0e;
   z-index: 10;
