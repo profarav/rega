@@ -15,14 +15,14 @@ body {
   margin: 0;
   width: 356px;
   height: 480px;
+  background: radial-gradient(140% 120% at 50% -20%, #f6c1bc 0%, transparent 38%),
+    radial-gradient(130% 120% at 20% 100%, #c894ce 0%, transparent 48%),
+    linear-gradient(145deg, var(--bg-1) 0%, var(--bg-2) 48%, var(--bg-3) 100%);
 }
 
 body {
   font-family: "Avenir Next", "SF Pro Display", "Helvetica Neue", sans-serif;
   color: var(--text-main);
-  background: radial-gradient(140% 120% at 50% -20%, #f6c1bc 0%, transparent 38%),
-    radial-gradient(130% 120% at 20% 100%, #c894ce 0%, transparent 48%),
-    linear-gradient(145deg, var(--bg-1) 0%, var(--bg-2) 48%, var(--bg-3) 100%);
   overflow: hidden;
 }
 
