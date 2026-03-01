@@ -144,7 +144,7 @@ body {
 .details-toggle {
   position: absolute;
   left: 50%;
-  bottom: 92px;
+  bottom: 30px;
   transform: translateX(-50%);
   margin: 0;
   border: 0;
@@ -181,7 +181,7 @@ body {
 .menu-panel {
   position: absolute;
   left: 50%;
-  bottom: 40px;
+  bottom: 78px;
   transform: translateX(-50%) translateY(8px);
   opacity: 0;
   pointer-events: none;
