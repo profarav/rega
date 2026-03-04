@@ -33,6 +33,25 @@
         color: #d1d5db;
         line-height: 1.4;
       }
+
+      .quote {
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid #374151;
+      }
+
+      .quote-text {
+        font-size: 15px;
+        font-style: italic;
+        color: #9ca3af;
+        line-height: 1.6;
+      }
+
+      .quote-author {
+        margin-top: 8px !important;
+        font-size: 13px;
+        color: #6b7280;
+      }
     </style>
   </head>
   <body>
@@ -42,6 +61,34 @@
         You are currently in a focus session. Return to your task, or end your session in the
         Rega app.
       </p>
+
+      <div class="quote">
+        <p class="quote-text" id="quote-text"></p>
+        <p class="quote-author" id="quote-author"></p>
+      </div>
     </section>
+
+    <script>
+      const QUOTES = [
+        { text: "The successful warrior is the average man, with laser-like focus.", author: "Bruce Lee" },
+        { text: "Where focus goes, energy flows.", author: "Tony Robbins" },
+        { text: "You don't have to see the whole staircase, just take the first step.", author: "Martin Luther King Jr." },
+        { text: "It's not that I'm so smart, it's just that I stay with problems longer.", author: "Albert Einstein" },
+        { text: "Concentrate all your thoughts upon the work in hand.", author: "Alexander Graham Bell" },
+        { text: "The key is not to prioritize what's on your schedule, but to schedule your priorities.", author: "Stephen Covey" },
+        { text: "Do the hard jobs first. The easy jobs will take care of themselves.", author: "Dale Carnegie" },
+        { text: "You will never reach your destination if you stop to throw stones at every dog that barks.", author: "Winston Churchill" },
+        { text: "The ability to focus attention on important things is a defining characteristic of intelligence.", author: "Robert Shiller" },
+        { text: "Starve your distractions, feed your focus.", author: "" },
+        { text: "One reason so few of us achieve what we truly want is that we never direct our focus.", author: "Tony Robbins" },
+        { text: "That's been one of my mantras — focus and simplicity.", author: "Steve Jobs" },
+      ];
+
+      const quote = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+      document.getElementById("quote-text").textContent = `"${quote.text}"`;
+      if (quote.author) {
+        document.getElementById("quote-author").textContent = `— ${quote.author}`;
+      }
+    </script>
   </body>
 </html>
